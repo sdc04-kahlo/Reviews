@@ -1,0 +1,31 @@
+{
+  "name": "reviews",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server:dev": "nodemon server",
+    "create_db": "sudo -u postgres psql < scripts/create_db.sql",
+    "load_db": "sudo -u postgres psql -d atelier_reviews < scripts/seed_db.sql",
+    "seed_db": "npm run create_db && npm run load_db"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdc04-kahlo/Reviews.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sdc04-kahlo/Reviews/issues"
+  },
+  "homepage": "https://github.com/sdc04-kahlo/Reviews#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "nodemon": "^2.0.12"
+  }
+}
