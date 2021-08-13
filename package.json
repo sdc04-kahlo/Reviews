@@ -22,7 +22,8 @@
   "homepage": "https://github.com/sdc04-kahlo/Reviews#readme",
   "dependencies": {
     "axios": "^0.21.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "8.2.x"
   },
   "devDependencies": {
     "jest": "^27.0.6",

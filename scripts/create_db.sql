@@ -52,22 +52,17 @@ CREATE TABLE characteristics (
   PRIMARY KEY (id)
 );
 
--- ALTER TABLE reviews ADD FOREIGN KEY (product_id) REFERENCES products (id);
--- ALTER TABLE characteristics ADD FOREIGN KEY (product_id) REFERENCES products (id);
--- ALTER TABLE photos ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
--- ALTER TABLE characteristic_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics (id);
--- ALTER TABLE characteristic_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
+ALTER TABLE reviews ADD FOREIGN KEY (product_id) REFERENCES products (id);
+ALTER TABLE characteristics ADD FOREIGN KEY (product_id) REFERENCES products (id);
+ALTER TABLE photos ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
+ALTER TABLE characteristic_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics (id);
+ALTER TABLE characteristic_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
 
 -- Test Data
 -- ---
 
--- INSERT INTO product (id,name,slogan,description,category,default_price) VALUES
--- ('','','','','','');
--- INSERT INTO reviews (id,product_id,rating,date,summary,body,recommend,reported,reviewer_name,reviewer_email,response,helpfulness) VALUES
--- ('','','','','','','','','','','','');
--- INSERT INTO characteristics (id,product_id,name) VALUES
--- ('','','');
--- INSERT INTO photos (id,review_id,url) VALUES
--- ('','','');
--- INSERT INTO characteristic_reviews (id,id_meta_data,id_reviews,value) VALUES
--- ('','','','');
+-- select name from products where id=2;
+
+-- select product_id from reviews;
+
+-- select * from reviews where product_id=2;
