@@ -3,20 +3,31 @@ CREATE DATABASE atelier_reviews;
 
 \c atelier_reviews;
 
+DROP ROLE api;
+CREATE ROLE api LOGIN PASSWORD 'review123';
+
 
 CREATE TABLE products (
-  id SERIAL,
+  id SERIAL PRIMARY KEY,
   name VARCHAR NOT NULL,
   slogan VARCHAR NOT NULL,
   description VARCHAR NOT NULL,
   category VARCHAR NOT NULL,
-  default_price INTEGER NOT NULL,
-  PRIMARY KEY (id)
+  default_price INTEGER NOT NULL
 );
 
+COPY products
+FROM '/home/tyler_petersen/hackreactor/Reviews/Reviews_data/product.csv'
+DELIMITER ','
+CSV HEADER;
+
+CREATE INDEX ON products (id);
+GRANT ALL ON products TO api;
+
+
 CREATE TABLE reviews (
-  id SERIAL,
-  product_id INTEGER NULL DEFAULT NULL,
+  id SERIAL PRIMARY KEY,
+  product_id INT REFERENCES products (id),
   rating INTEGER NOT NULL,
   date BIGINT NOT NULL,
   summary VARCHAR NOT NULL,
@@ -26,43 +37,59 @@ CREATE TABLE reviews (
   reviewer_name VARCHAR NOT NULL,
   reviewer_email VARCHAR NOT NULL,
   response VARCHAR NULL DEFAULT NULL,
-  helpfulness INTEGER NOT NULL DEFAULT 0,
-  PRIMARY KEY (id)
+  helpfulness INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE TABLE characteristic_reviews (
-  id SERIAL,
-  characteristic_id INTEGER NOT NULL,
-  review_id INTEGER NOT NULL,
-  value INTEGER NOT NULL,
-  PRIMARY KEY (id)
-);
+COPY reviews
+FROM '/home/tyler_petersen/hackreactor/Reviews/Reviews_data/reviews.csv'
+DELIMITER ','
+CSV HEADER;
+
+CREATE INDEX ON reviews (id);
+GRANT ALL ON reviews TO api;
+
 
 CREATE TABLE photos (
-  id SERIAL,
-  review_id INTEGER NOT NULL,
-  url VARCHAR NOT NULL,
-  PRIMARY KEY (id)
+  id SERIAL PRIMARY KEY,
+  review_id INT REFERENCES reviews (id),
+  url VARCHAR NOT NULL
 );
+
+COPY photos
+FROM '/home/tyler_petersen/hackreactor/Reviews/Reviews_data/reviews_photos.csv'
+DELIMITER ','
+CSV HEADER;
+
+CREATE INDEX ON photos (review_id);
+GRANT ALL ON photos TO api;
+
 
 CREATE TABLE characteristics (
-  id SERIAL,
-  product_id INTEGER NOT NULL,
-  name VARCHAR NOT NULL,
-  PRIMARY KEY (id)
+  id SERIAL PRIMARY KEY,
+  product_id INT REFERENCES products (id),
+  name VARCHAR NOT NULL
 );
 
-ALTER TABLE reviews ADD FOREIGN KEY (product_id) REFERENCES products (id);
-ALTER TABLE characteristics ADD FOREIGN KEY (product_id) REFERENCES products (id);
-ALTER TABLE photos ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
-ALTER TABLE characteristic_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics (id);
-ALTER TABLE characteristic_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
+COPY characteristics
+FROM '/home/tyler_petersen/hackreactor/Reviews/Reviews_data/characteristics.csv'
+DELIMITER ','
+CSV HEADER;
 
--- Test Data
--- ---
+CREATE INDEX ON characteristics (product_id);
+GRANT ALL ON characteristics TO api;
 
--- select name from products where id=2;
 
--- select product_id from reviews;
+CREATE TABLE characteristic_reviews (
+  id SERIAL PRIMARY KEY,
+  characteristic_id INT REFERENCES characteristics (id),
+  review_id INT REFERENCES reviews (id),
+  value INTEGER NOT NULL
+);
 
--- select * from reviews where product_id=2;
+COPY characteristic_reviews
+FROM '/home/tyler_petersen/hackreactor/Reviews/Reviews_data/characteristic_reviews.csv'
+DELIMITER ','
+CSV HEADER;
+
+CREATE INDEX ON characteristic_reviews (characteristic_id);
+GRANT ALL ON characteristic_reviews TO api;

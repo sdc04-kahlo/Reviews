@@ -1,34 +1,41 @@
+const dotenv = require('dotenv');
 const express = require('express');
-const db = require('../db');
+const morgan = require('morgan');
+const conInfo = require('../config.js');
+const { Pool, Client } = require('pg');
 
+dotenv.config();
 const app = express();
-const port = 3000;
+app.use(morgan('dev'));
 
-const axios = require('axios')
+// const pool = new Pool(conInfo);
+
+// pool.query(`select * from reviews where id=2`, (err, res) => {
+//   console.log(err, res)
+//   pool.end()
+// })
+
+
+const client = new Client(conInfo);
+client.connect()
+  .then(() => console.log('Connected!'))
+  .catch(err => console.error(err.stack));
+
+
+// client.query(`select * from reviews where id=2`, (err, res) => {
+//   if (err) {
+//     console.log(err)
+//   } else {
+//     console.log(res.rows);
+//   }
+// })
+
 
 app.get('/', (req, res) => {
   res.send('︻╦╤─ ҉ - - BANG BANG WE RUNNIN!');
 });
 
-app.get('/reviews', (req, res) => {
 
-  db.test((err, item) => {
-    if (err) {
-      console.log('Error', err);
-      res.sendStatus(404);
-    } else {
-      res.status(200).send(item);
-    }
-  });
-
-});
-
-app.post('/reviews', (req, res) => {
-
-  // some fn in db
-
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(conInfo.port, () => {
+  console.log(`Example app listening at http://localhost:${conInfo.port}`);
 });
