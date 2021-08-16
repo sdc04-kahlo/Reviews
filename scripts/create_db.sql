@@ -3,9 +3,21 @@ CREATE DATABASE atelier_reviews;
 
 \c atelier_reviews;
 
+REVOKE ALL ON products FROM api;
+REVOKE ALL ON reviews FROM api;
+REVOKE ALL ON photos FROM api;
+REVOKE ALL ON characteristics FROM api;
+REVOKE ALL ON characteristic_reviews FROM api;
+
 DROP ROLE api;
 CREATE ROLE api LOGIN PASSWORD 'review123';
 
+
+DROP TABLE IF EXISTS characteristic_reviews;
+DROP TABLE IF EXISTS characteristics;
+DROP TABLE IF EXISTS photos;
+DROP TABLE IF EXISTS reviews;
+DROP TABLE IF EXISTS products;
 
 CREATE TABLE products (
   id SERIAL PRIMARY KEY,
@@ -51,7 +63,7 @@ GRANT ALL ON reviews TO api;
 
 CREATE TABLE photos (
   id SERIAL PRIMARY KEY,
-  review_id INT REFERENCES reviews (id),
+  review_id INT NOT NULL,
   url VARCHAR NOT NULL
 );
 
