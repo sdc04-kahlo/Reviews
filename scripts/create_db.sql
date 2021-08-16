@@ -105,3 +105,4 @@ CSV HEADER;
 
 CREATE INDEX ON characteristic_reviews (characteristic_id);
 GRANT ALL ON characteristic_reviews TO api;
+
