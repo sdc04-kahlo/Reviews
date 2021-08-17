@@ -29,11 +29,11 @@ CREATE TABLE products (
 );
 
 COPY products
-FROM '/home/tyler_petersen/hackreactor/Reviews/Reviews_data/product.csv'
+FROM '/home/tyler_petersen/hackreactor/Reviews/reviews_full_data/product.csv'
 DELIMITER ','
 CSV HEADER;
 
-CREATE INDEX ON products (id);
+CREATE INDEX product_index ON products (id);
 GRANT ALL ON products TO api;
 
 
@@ -53,11 +53,11 @@ CREATE TABLE reviews (
 );
 
 COPY reviews
-FROM '/home/tyler_petersen/hackreactor/Reviews/Reviews_data/reviews.csv'
+FROM '/home/tyler_petersen/hackreactor/Reviews/reviews_full_data/reviews.csv'
 DELIMITER ','
 CSV HEADER;
 
-CREATE INDEX ON reviews (id);
+CREATE INDEX review_index ON reviews (product_id);
 GRANT ALL ON reviews TO api;
 
 
@@ -68,11 +68,11 @@ CREATE TABLE photos (
 );
 
 COPY photos
-FROM '/home/tyler_petersen/hackreactor/Reviews/Reviews_data/reviews_photos.csv'
+FROM '/home/tyler_petersen/hackreactor/Reviews/reviews_full_data/reviews_photos.csv'
 DELIMITER ','
 CSV HEADER;
 
-CREATE INDEX ON photos (review_id);
+CREATE INDEX photo_index ON photos (review_id);
 GRANT ALL ON photos TO api;
 
 
@@ -83,11 +83,11 @@ CREATE TABLE characteristics (
 );
 
 COPY characteristics
-FROM '/home/tyler_petersen/hackreactor/Reviews/Reviews_data/characteristics.csv'
+FROM '/home/tyler_petersen/hackreactor/Reviews/reviews_full_data/characteristics.csv'
 DELIMITER ','
 CSV HEADER;
 
-CREATE INDEX ON characteristics (product_id);
+CREATE INDEX characteristics_index ON characteristics (product_id);
 GRANT ALL ON characteristics TO api;
 
 
@@ -99,10 +99,10 @@ CREATE TABLE characteristic_reviews (
 );
 
 COPY characteristic_reviews
-FROM '/home/tyler_petersen/hackreactor/Reviews/Reviews_data/characteristic_reviews.csv'
+FROM '/home/tyler_petersen/hackreactor/Reviews/reviews_full_data/characteristic_reviews.csv'
 DELIMITER ','
 CSV HEADER;
 
-CREATE INDEX ON characteristic_reviews (characteristic_id);
+CREATE INDEX characteristic_reviews_index ON characteristic_reviews (characteristic_id);
 GRANT ALL ON characteristic_reviews TO api;
 
