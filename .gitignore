@@ -1,0 +1,8 @@
+node_modules
+package-lock.json
+config.js
+Reviews_data
+reviews_full_data
+newrelic.js
+.env
+pem_data
