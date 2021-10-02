@@ -1,3 +1,4 @@
+
 # Atelier Products API
 
 Lightweight, scalable microservice serving a growing [ecommerce front-end](https://github.com/RFP54-Helios/FEC)
@@ -35,3 +36,4 @@ Lightweight, scalable microservice serving a growing [ecommerce front-end](https
 ### System Architecture
 
 ![System Architecture](/lib/nginx.JPG)
+
