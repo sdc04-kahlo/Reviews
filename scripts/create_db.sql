@@ -57,7 +57,7 @@ FROM '/home/tyler_petersen/hackreactor/Reviews/reviews_full_data/reviews.csv'
 DELIMITER ','
 CSV HEADER;
 
-CREATE INDEX review_index ON reviews (product_id);
+CREATE INDEX review_index ON reviews (product_id, reported);
 GRANT ALL ON reviews TO api;
 
 

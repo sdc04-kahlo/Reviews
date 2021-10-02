@@ -4,5 +4,7 @@ config.js
 Reviews_data
 reviews_full_data
 newrelic.js
-.env
+*.env
 pem_data
+script.js
+*.pem
