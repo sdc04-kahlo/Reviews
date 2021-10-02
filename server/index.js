@@ -21,20 +21,7 @@ app.get('/', (req, res) => {
   res.send('︻╦╤─ ҉ - - BANG BANG WE RUNNIN!');
 });
 
-
 app.get('/reviews/meta/:product_id', async (req, res) => {
-
-  // const queryMeta = {
-  //   name: 'test',
-  //   text: `SELECT json_object_agg(
-  //     name, json_build_object(
-  //     'id', id,
-  //     'value', 'test'
-  //     )
-  //   ) as characteristics FROM characteristics where product_id=$1`,
-  //   values: [req.params.product_id]
-  // };
-
 
   const metaObj = {
     name: 'get-product-ratings',
@@ -68,7 +55,6 @@ app.get('/reviews/meta/:product_id', async (req, res) => {
   };
 
 
-
   try {
     const results = await client.query(metaObj);
     res.json(results.rows[0]);
@@ -83,7 +69,16 @@ app.get('/reviews/:product_id', async (req, res) => {
   const query = {
     name: 'get-product-reviews',
     text: `
-    SELECT r.id, r.rating, to_timestamp(r.date::DECIMAL/1000) as date, r.summary, r.body, r.recommend, r.reviewer_name, r.response, r.helpfulness,
+    SELECT
+    r.id,
+    r.rating,
+    to_timestamp(r.date::DECIMAL/1000) as date, 
+    r.summary,
+    r.body,
+    r.recommend,
+    r.reviewer_name,
+    r.response,
+    r.helpfulness,
         (SELECT json_agg(u)
           FROM (
             SELECT id, url from photos where review_id=r.id
